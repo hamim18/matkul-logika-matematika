@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Logika AND </title>
+  </head>
+  <body>
+    <h2>Form PMB</h2>
+   <form>
+     <label>
+      <input type="checkbox" id="sudahBayar"> Sudah Bayar
+     </label><br>
+     <label>
+      <input type="checkbox" id="berkasLengkap"> Berkas Lengkap
+     </label><br>
+    <label>
+      <button type="button" onclick="cekHasil()"> Cek hasil</button>
+    </label><br><br>
+   </form>
+      <h3 id="hasil"></h3>
+    <script>
+      function cekHasil(){
+        let sudahBayar=document.getElementById('sudahBayar').checked;
+        let berkasLengkap=document.getElementById('berkasLengkap').checked;
+    
+        if (sudahBayar && berkasLengkap){
+          document.getElementById('hasil').textContent = 'LULUS';
+        }else{
+          document.getElementById('hasil').textContent = 'TIDAK LULUS';
+    }
+  }
+    </script>
+  </body>
+</html>

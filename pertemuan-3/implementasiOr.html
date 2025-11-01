@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Logika AND </title>
+  </head>
+  <body>
+    <h2>Form PMB</h2>
+   <form>
+     <label>
+      <input type="checkbox" id="upKk"> upload kk
+     </label><br>
+     <label>
+      <input type="checkbox" id="upKtp"> upload ktp
+     </label><br>
+    <label>
+      <button type="button" onclick="cekHasil()"> Cek tes online</button>
+    </label><br><br>
+   </form>
+      <h3 id="hasil"></h3>
+    <script>
+      function cekHasil(){
+        let sudahBayar=document.getElementById('upKk').checked;
+        let berkasLengkap=document.getElementById('upKtp').checked;
+    
+        if (sudahBayar || berkasLengkap){
+          document.getElementById('hasil').textContent = 'oke, sudah bisa';
+        }else{
+          document.getElementById('hasil').textContent = 'lengkapi berkas dulu';
+    }
+  }
+    </script>
+  </body>
+</html>
