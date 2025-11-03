@@ -14,6 +14,14 @@ function hitungZakat() {
     }
 
     document.getElementById('hasil').innerText = hasilText;
+
+    const hukum = `
+        Hukum logika pada perhitungan zakat di atas antara lain:
+        - Hukum Dominasi: Jika haul < 1, walaupun emas ≥ 85 tetap Tidak Wajib Zakat.
+        - Hukum Komutatif: Urutan kondisi emas dan haul tidak memengaruhi hasil.
+        - Hukum Identitas: Jika haul = 1, kondisi emas menentukan wajib atau tidaknya zakat.
+    `;
+    document.getElementById('hukumLogika').innerText = hukum;
 }
 
 document.getElementById('hitungBtn').addEventListener('click', hitungZakat);
