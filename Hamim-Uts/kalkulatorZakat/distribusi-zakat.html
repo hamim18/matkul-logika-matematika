@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Distribusi Zakat Maal</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .mustahik-container {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      margin: 20px auto;
+      max-width: 800px;
+      text-align: left;
+    }
+    
+    .mustahik-item {
+      background-color: #f6f8f7;
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 8px;
+      border-left: 4px solid #006b4f;
+      transition: all 0.3s;
+    }
+    
+    .mustahik-item:hover {
+      background-color: #e8f5e9;
+      transform: translateX(5px);
+    }
+    
+    .mustahik-item.selected {
+      background-color: #c8e6c9;
+      border-left: 4px solid #4caf50;
+    }
+    
+    .mustahik-checkbox {
+      margin-right: 10px;
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+    }
+    
+    .mustahik-label {
+      font-size: 16px;
+      font-weight: bold;
+      color: #006b4f;
+      cursor: pointer;
+    }
+    
+    .mustahik-desc {
+      margin: 8px 0 8px 30px;
+      font-size: 14px;
+      color: #555;
+      font-style: italic;
+    }
+    
+    .hasil-distribusi {
+      background-color: #e3f2fd;
+      padding: 20px;
+      border-radius: 10px;
+      margin: 20px auto;
+      max-width: 800px;
+      border: 2px solid #2196f3;
+    }
+    
+    .distribusi-item {
+      background-color: white;
+      padding: 12px;
+      margin: 8px 0;
+      border-radius: 5px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .distribusi-nama {
+      font-weight: bold;
+      color: #1976d2;
+    }
+    
+    .distribusi-jumlah {
+      font-size: 18px;
+      font-weight: bold;
+      color: #4caf50;
+    }
+    
+    .info-box {
+      background-color: #fff3cd;
+      padding: 15px;
+      border-left: 5px solid #ff9800;
+      border-radius: 5px;
+      margin: 20px auto;
+      max-width: 800px;
+    }
+    
+    .logika-box {
+      background-color: #f3e5f5;
+      padding: 20px;
+      border-radius: 10px;
+      margin: 20px auto;
+      max-width: 800px;
+      border: 2px solid #9c27b0;
+    }
+    
+    table.logika-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 15px 0;
+    }
+    
+    table.logika-table th,
+    table.logika-table td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: left;
+    }
+    
+    table.logika-table th {
+      background-color: #9c27b0;
+      color: white;
+    }
+    
+    table.logika-table tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+    
+    .btn-container {
+      margin: 20px 0;
+    }
+    
+    .btn-primary {
+      background-color: #006b4f;
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      margin: 5px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 16px;
+      transition: background 0.3s;
+    }
+    
+    .btn-primary:hover {
+      background-color: #004d37;
+    }
+    
+    .btn-secondary {
+      background-color: #666;
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      margin: 5px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 16px;
+      transition: background 0.3s;
+    }
+    
+    .btn-secondary:hover {
+      background-color: #444;
+    }
+    
+    .total-zakat-display {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      margin: 20px auto;
+      max-width: 800px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    }
+    
+    .total-zakat-display h2 {
+      color: white;
+      margin: 10px 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>Distribusi Zakat Maal</h1>
+  <h2>8 Golongan Mustahik (Penerima Zakat)</h2>
+
+  <div class="total-zakat-display">
+    <h2>💰 Total Zakat yang Akan Didistribusikan</h2>
+    <h1 id="totalZakatDisplay">Rp 0</h1>
+  </div>
+
+  <div class="info-box">
+    <h3>ℹ️ Informasi</h3>
+    <p><b>Mustahik</b> adalah 8 golongan yang berhak menerima zakat sesuai dengan QS. At-Taubah ayat 60:</p>
+    <blockquote style="font-style: italic; margin: 10px 0; padding-left: 15px; border-left: 3px solid #ff9800;">
+      "Sesungguhnya zakat itu hanyalah untuk orang-orang fakir, orang miskin, amil zakat, yang dilunakkan hatinya (muallaf), untuk (memerdekakan) hamba sahaya, untuk (membebaskan) orang yang berutang, untuk jalan Allah, dan untuk orang yang sedang dalam perjalanan, sebagai kewajiban dari Allah. Allah Maha Mengetahui, Mahabijaksana."
+    </blockquote>
+    <p><b>Silakan pilih golongan penerima zakat dengan mencentang checkbox di bawah ini.</b></p>
+  </div>
+
+  <div class="mustahik-container">
+    <h3>📋 Pilih Mustahik (Penerima Zakat)</h3>
+    <p><i>Centang golongan yang akan menerima zakat Anda</i></p>
+    <hr>
+
+    <div class="mustahik-item" id="item-fakir">
+      <label class="mustahik-label">
+        <input type="checkbox" class="mustahik-checkbox" value="fakir" id="cek-fakir">
+        1️⃣ Fakir
+      </label>
+      <p class="mustahik-desc">Orang yang tidak memiliki harta dan tenaga untuk memenuhi kebutuhan pokok.</p>
+    </div>
+
+    <div class="mustahik-item" id="item-miskin">
+      <label class="mustahik-label">
+        <input type="checkbox" class="mustahik-checkbox" value="miskin" id="cek-miskin">
+        2️⃣ Miskin
+      </label>
+      <p class="mustahik-desc">Orang yang memiliki harta/penghasilan tetapi tidak cukup untuk memenuhi kebutuhan pokok.</p>
+    </div>
+
+    <div class="mustahik-item" id="item-amil">
+      <label class="mustahik-label">
+        <input type="checkbox" class="mustahik-checkbox" value="amil" id="cek-amil">
+        3️⃣ Amil (Pengurus Zakat)
+      </label>
+      <p class="mustahik-desc">Orang yang ditugaskan untuk mengumpulkan dan mendistribusikan zakat.</p>
+    </div>
+
+    <div class="mustahik-item" id="item-muallaf">
+      <label class="mustahik-label">
+        <input type="checkbox" class="mustahik-checkbox" value="muallaf" id="cek-muallaf">
+        4️⃣ Muallaf
+      </label>
+      <p class="mustahik-desc">Orang yang baru masuk Islam atau yang hatinya perlu dilunakkan terhadap Islam.</p>
+    </div>
+
+    <div class="mustahik-item" id="item-riqab">
+      <label class="mustahik-label">
+        <input type="checkbox" class="mustahik-checkbox" value="riqab" id="cek-riqab">
+        5️⃣ Riqab (Memerdekakan Budak)
+      </label>
+      <p class="mustahik-desc">Untuk membebaskan budak atau membantu orang yang dalam perbudakan (konteks modern: korban trafficking, pekerja tereksploitasi).</p>
+    </div>
+
+    <div class="mustahik-item" id="item-gharim">
+      <label class="mustahik-label">
+        <input type="checkbox" class="mustahik-checkbox" value="gharim" id="cek-gharim">
+        6️⃣ Gharim (Orang Berutang)
+      </label>
+      <p class="mustahik-desc">Orang yang berutang untuk kepentingan yang tidak maksiat dan tidak mampu membayar.</p>
+    </div>
+
+    <div class="mustahik-item" id="item-fisabilillah">
+      <label class="mustahik-label">
+        <input type="checkbox" class="mustahik-checkbox" value="fisabilillah" id="cek-fisabilillah">
+        7️⃣ Fi Sabilillah (Di Jalan Allah)
+      </label>
+      <p class="mustahik-desc">Untuk kepentingan perjuangan di jalan Allah (dakwah, pendidikan Islam, pembangunan masjid, dll).</p>
+    </div>
+
+    <div class="mustahik-item" id="item-ibnusabil">
+      <label class="mustahik-label">
+        <input type="checkbox" class="mustahik-checkbox" value="ibnusabil" id="cek-ibnusabil">
+        8️⃣ Ibnu Sabil (Musafir)
+      </label>
+      <p class="mustahik-desc">Orang yang sedang dalam perjalanan (untuk tujuan baik) dan kehabisan bekal.</p>
+    </div>
+  </div>
+
+  <div class="btn-container">
+    <button class="btn-primary" id="hitungDistribusiBtn">Hitung Distribusi Zakat</button>
+    <button class="btn-secondary" onclick="window.location.href='zakat-maal.html'">Kembali ke Zakat Maal</button>
+  </div>
+
+  <div id="hasilDistribusi"></div>
+  <div id="logikaHimpunan"></div>
+
+  <script type="module" src="js/distribusi-zakat.js"></script>
+</body>
+</html>

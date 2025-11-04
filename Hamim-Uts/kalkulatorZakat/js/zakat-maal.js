@@ -360,6 +360,21 @@ function hitungZakat() {
   // === HASIL AKHIR ===
   hasilEl.innerText = totalZakatRp > 0 ? "✅ Total Wajib Zakat" : "❌ Tidak Ada Zakat Wajib";
   nominalZakatEl.innerHTML = `💰 Total Zakat yang Harus Dibayar: <b>Rp ${totalZakatRp.toLocaleString('id-ID')}</b><hr>`;
+  
+  // Tambahkan tombol distribusi jika ada zakat yang wajib
+  if (totalZakatRp > 0) {
+    nominalZakatEl.innerHTML += `
+      <div style="margin: 20px 0; text-align: center;">
+        <button onclick="distribusiZakat(${totalZakatRp})" style="background-color: #2196f3; color: white; border: none; padding: 15px 30px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 16px; box-shadow: 0 4px 6px rgba(0,0,0,0.2); transition: all 0.3s;">
+          📊 Distribusi Zakat ke 8 Golongan Mustahik
+        </button>
+        <p style="margin-top: 10px; color: #666; font-size: 14px;">
+          <i>Klik untuk mendistribusikan zakat kepada fakir, miskin, amil, muallaf, riqab, gharim, fi sabilillah, dan ibnu sabil</i>
+        </p>
+      </div>
+    `;
+  }
+  
   argumenLogisEl.innerHTML = argumenGabungan.join("<br>");
   hukumLogikaEl.innerHTML = `
     <b>Hukum Logika Gabungan:</b>
@@ -376,3 +391,11 @@ hitungBtn.addEventListener('click', hitungZakat);
 
 // Inisialisasi awal
 window.addEventListener('DOMContentLoaded', tampilkanInput);
+
+// Fungsi untuk navigasi ke halaman distribusi zakat
+window.distribusiZakat = function(totalZakat) {
+  // Simpan total zakat ke sessionStorage
+  sessionStorage.setItem('totalZakatMaal', totalZakat);
+  // Redirect ke halaman distribusi dengan parameter
+  window.location.href = `distribusi-zakat.html?total=${totalZakat}`;
+}
