@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kalkulator Zakat Fitrah</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h1>UTS Logika Matematika - Kalkulator Zakat Fitrah</h1>
+  <h2>Perhitungan Zakat Fitrah</h2>
+  
+  <div style="text-align: left; display: inline-block; max-width: 600px;">
+    <p><i>Zakat Fitrah adalah zakat yang wajib dikeluarkan oleh setiap Muslim menjelang Idul Fitri (sebelum salat Id). Zakat ini bertujuan untuk membersihkan jiwa dari dosa-dosa kecil dan memberikan kebahagiaan kepada fakir miskin di hari raya.</i></p>
+    <hr>
+    
+    <h3>📊 Data Keluarga</h3>
+    <label>Jumlah Anggota Keluarga (jiwa):</label>
+    <input type="number" id="jumlahJiwa" value="1" min="1"><br><br>
+    
+    <label>Kategori Anggota Keluarga:</label><br>
+    <div style="margin-left: 20px;">
+      <label><input type="checkbox" id="adaDewasa"> Ada Anggota Dewasa</label><br>
+      <label><input type="checkbox" id="adaAnak"> Ada Anak-anak</label><br>
+      <label><input type="checkbox" id="adaBayi"> Ada Bayi yang baru lahir (sebelum Idul Fitri)</label><br>
+    </div>
+    <br>
+    
+    <h3>🌾 Pilih Jenis Makanan Pokok</h3>
+    <input type="radio" name="jenisMakanan" value="beras" checked> Beras<br>
+    <input type="radio" name="jenisMakanan" value="gandum"> Gandum<br>
+    <input type="radio" name="jenisMakanan" value="kurma"> Kurma<br>
+    <input type="radio" name="jenisMakanan" value="sagu"> Sagu<br>
+    <input type="radio" name="jenisMakanan" value="uang"> Uang (setara harga makanan pokok)<br><br>
+    
+    <div id="inputHarga">
+      <label>Harga per Kg (Rp):</label>
+      <input type="number" id="hargaPerKg" value="15000"><br><br>
+    </div>
+    
+    <h3>⏰ Waktu Pembayaran</h3>
+    <label><input type="checkbox" id="sudahBayar"> Sudah membayar zakat fitrah</label><br>
+    <label>Waktu pembayaran:</label><br>
+    <input type="radio" name="waktuBayar" value="awal" checked> Awal Ramadan<br>
+    <input type="radio" name="waktuBayar" value="tengah"> Pertengahan Ramadan<br>
+    <input type="radio" name="waktuBayar" value="akhir"> Akhir Ramadan (sebelum salat Id)<br>
+    <input type="radio" name="waktuBayar" value="setelah"> Setelah salat Id (terlambat)<br><br>
+    
+    <p><i><b>Catatan:</b> Zakat fitrah wajib dibayarkan sebelum salat Idul Fitri. Jika dibayar setelah salat Id, hukumnya menjadi sedekah biasa.</i></p>
+  </div>
+
+  <button id="hitungBtn">Hitung Zakat Fitrah</button>
+  <button onclick="window.location.href='profil.html'" style="background-color: #666;">Kembali ke Profil</button>
+
+  <hr />
+  <h2 id="hasil"></h2>
+  <p id="rincianZakat"></p>
+  <p id="statusPembayaran"></p>
+  <p id="hukumLogika"></p>
+
+  <script type="module" src="js/zakat-fitrah.js"></script>
+</body>
+</html>
