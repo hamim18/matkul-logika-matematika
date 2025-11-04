@@ -1,31 +1,28 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kalkulator Zakat</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kalkulator Multiple Zakat</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <h1>Kalkulator Zakat</h1>
+  <h1>UTS Logika Matematika - Kalkulator Multiple Zakat</h1>
+  <h2>Pilih Jenis Zakat</h2>
+  <label><input type="checkbox" id="cekEmas" /> Zakat Emas</label><br />
+  <label><input type="checkbox" id="cekPertanian" /> Zakat Pertanian</label><br />
+  <label><input type="checkbox" id="cekPenghasilan" /> Zakat Penghasilan</label><br /><br />
 
-    <label for="jenisZakat">Pilih Jenis Zakat:</label>
-    <select id="jenisZakat">
-        <option value="">--Pilih--</option>
-        <option value="emas">Emas</option>
-        <option value="pertanian">Pertanian</option>
-        <option value="penghasilan">Penghasilan</option>
-    </select><br><br>
+  <div id="inputContainer"></div>
 
-    <div id="inputContainer"></div>
+  <button id="hitungBtn">Hitung Total Zakat</button>
 
-    <button id="hitungBtn">Hitung Zakat</button>
+  <hr />
+  <h2 id="hasil"></h2>
+  <p id="nominalZakat"></p>
+  <p id="argumenLogis"></p>
+  <p id="hukumLogika"></p>
 
-    <h2 id="hasil"></h2>
-    <p id="nominalZakat"></p>
-    <p id="argumenLogis"></p>
-    <p id="hukumLogika"></p>
-    
-    <script type="module" src="js/zakat-maal.js"></script>
+  <script type="module" src="js/zakat-maal.js"></script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-// js/zakat-pertanian.js
+// zakat-pertanian.js (Level 6)
 export function hitungZakatPertanian() {
     const hargaPerKg = {
         padi: 10000,
@@ -12,6 +12,7 @@ export function hitungZakatPertanian() {
     let totalZakatKg = 0;
     let totalZakatRp = 0;
     let rincian = [];
+    let hukumLogika = [];
 
     jenisPertanian.forEach(jenis => {
         const checkbox = document.querySelector(`.jenisPertanian[value="${jenis}"]`);
@@ -24,7 +25,6 @@ export function hitungZakatPertanian() {
         const irigasiBuatan = irigasiCheckbox?.checked || false;
         let zakatKg = 0;
         let zakatRp = 0;
-        let penjelasan = "";
 
         if (hasilPanen >= nisab) {
             const persentase = irigasiBuatan ? 0.05 : 0.10;
@@ -33,41 +33,35 @@ export function hitungZakatPertanian() {
             totalZakatKg += zakatKg;
             totalZakatRp += zakatRp;
 
-            penjelasan = `
-                ✅ Anda <b>wajib zakat</b> hasil <b>${jenis}</b> sebanyak ${hasilPanen.toLocaleString("id-ID")} kg,
-                dengan irigasi <b>${irigasiBuatan ? "buatan (5%)" : "alami (10%)"}</b>.<br>
-                Jumlah zakat: <b>${zakatKg.toFixed(2)} kg</b> (setara Rp ${zakatRp.toLocaleString("id-ID")}).
-            `;
-        } else {
-            penjelasan = `
-                ❌ Hasil panen <b>${jenis}</b> Anda sebesar ${hasilPanen.toLocaleString("id-ID")} kg 
-                belum mencapai nisab (653 kg), sehingga <b>tidak wajib zakat</b>.
-            `;
-        }
+            rincian.push(`
+✅ Hasil panen <b>${jenis}</b>: ${hasilPanen.toLocaleString("id-ID")} kg
+Irigasi: <b>${irigasiBuatan ? "buatan (5%)" : "alami (10%)"}</b>
+Zakat: <b>${zakatKg.toFixed(2)} kg</b> (Rp ${zakatRp.toLocaleString("id-ID")})
+            `);
 
-        rincian.push(penjelasan);
+            hukumLogika.push(`Hukum logika untuk ${jenis}: Konjungsi (AND) terpenuhi → wajib zakat.`);
+        } else {
+            rincian.push(`
+❌ Hasil panen <b>${jenis}</b>: ${hasilPanen.toLocaleString("id-ID")} kg
+Belum mencapai nisab (${nisab} kg) → tidak wajib zakat.
+            `);
+
+            hukumLogika.push(`Hukum logika untuk ${jenis}: Negasi → hasil < nisab → tidak wajib zakat.`);
+        }
     });
 
-    // Hasil akhir
-    const hasilText = totalZakatKg > 0 ? "Wajib Zakat" : "Tidak Wajib Zakat";
-    const nominalText = totalZakatKg > 0
-        ? `💰 Total zakat yang harus dikeluarkan: <b>Rp ${totalZakatRp.toLocaleString("id-ID")}</b> 
-           (${totalZakatKg.toFixed(2)} kg hasil panen)`
-        : "";
+    const hukumGabungan = `
+<ul>
+  <li><b>Hukum Konjungsi (AND)</b>: Zakat wajib jika hasil panen ≥ nisab dan jenis pertanian valid.</li>
+  <li><b>Hukum Disjungsi (OR)</b>: Salah satu jenis panen memenuhi nisab → sebagian wajib zakat.</li>
+  <li><b>Hukum Implikasi</b>: Jika hasil panen ≥ nisab → wajib zakat, jika tidak → tidak wajib.</li>
+  <li><b>Hukum Negasi</b>: Jika hasil panen < nisab → tidak wajib zakat.</li>
+</ul>
+`;
 
-    const hukumText = `
-        Hukum logika pada perhitungan zakat pertanian ini:
-        <ul>
-            <li><b>Hukum Konjungsi (AND)</b>: Wajib zakat jika hasil panen ≥ 653 kg dan jenis pertanian valid.</li>
-            <li><b>Hukum Disjungsi (OR)</b>: Salah satu jenis panen yang memenuhi nisab sudah menimbulkan kewajiban zakat.</li>
-            <li><b>Hukum Implikasi</b>: Jika hasil panen melebihi nisab, maka wajib zakat; jika tidak, maka tidak wajib.</li>
-            <li><b>Hukum Negasi</b>: Jika hasil panen < 653 kg, maka tidak wajib zakat.</li>
-        </ul>
-    `;
-
-    // Update tampilan
-    document.getElementById("hasil").innerText = hasilText;
-    document.getElementById("nominalZakat").innerHTML = nominalText;
-    document.getElementById("argumenLogis").innerHTML = rincian.join("<hr>");
-    document.getElementById("hukumLogika").innerHTML = hukumText;
+    return {
+        totalZakatRp,
+        rincian,
+        hukumLogika: hukumGabungan
+    };
 }

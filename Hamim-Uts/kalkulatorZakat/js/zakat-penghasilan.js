@@ -1,15 +1,14 @@
-// zakat-penghasilan.js
+// zakat-penghasilan.js (Level 6) - versi konsisten
 export function hitungZakatPenghasilan() {
-    const gaji = parseFloat(document.getElementById('gaji').value);
-    const pengeluaran = parseFloat(document.getElementById('pengeluaran').value);
+    const gaji = parseFloat(document.getElementById('gaji')?.value);
+    const pengeluaran = parseFloat(document.getElementById('pengeluaran')?.value);
 
-    // Ambil periode: bulanan atau tahunan
     const periodeEl = document.querySelector('input[name="periode"]:checked');
     const periode = periodeEl ? periodeEl.value : 'bulanan';
 
-    const kursEmas = 2321000; // harga emas per gram
+    const kursEmas = 2321000;
     const nisabEmasGram = 85;
-    const nisabTahunan = nisabEmasGram * kursEmas; // nisab tahunan dalam rupiah
+    const nisabTahunan = nisabEmasGram * kursEmas;
 
     let penghasilanBersih = 0;
     let nisab = 0;
@@ -19,60 +18,52 @@ export function hitungZakatPenghasilan() {
         nisab = nisabTahunan;
     } else {
         penghasilanBersih = gaji - pengeluaran;
-        nisab = nisabTahunan / 12; // nisab bulanan
+        nisab = nisabTahunan / 12;
     }
 
-    let hasilText = "";
-    let nominalText = "";
-    let argumenText = "";
-    let hukumText = "";
+    let totalZakatRp = 0;
+    let rincian = [];
+    let hukumLogika = "";
 
     if (isNaN(gaji) || isNaN(pengeluaran)) {
-        hasilText = "Input tidak valid. Mohon isi gaji dan pengeluaran dengan benar.";
+        rincian.push("Input tidak valid. Mohon isi gaji dan pengeluaran dengan benar.");
+        hukumLogika = "Tidak dapat dihitung karena input tidak valid.";
     } else {
         if (penghasilanBersih >= nisab) {
-            const zakat = penghasilanBersih * 0.025;
+            totalZakatRp = penghasilanBersih * 0.025;
 
-            hasilText = "Wajib Zakat";
-            nominalText = `Nominal zakat yang harus dikeluarkan: Rp ${zakat.toLocaleString("id-ID")}`;
+            rincian.push(`Periode: ${periode.charAt(0).toUpperCase() + periode.slice(1)}
+Penghasilan bersih: Rp ${penghasilanBersih.toLocaleString("id-ID")}
+Nisab: Rp ${nisab.toLocaleString("id-ID")}
+Karena penghasilan bersih ≥ nisab, Anda wajib menunaikan zakat sebesar 2.5% dari penghasilan bersih,
+yaitu Rp ${totalZakatRp.toLocaleString("id-ID")}.`);
 
-            argumenText = `
-                Periode: ${periode.charAt(0).toUpperCase() + periode.slice(1)}<br>
-                Penghasilan bersih: Rp ${penghasilanBersih.toLocaleString("id-ID")}<br>
-                Nisab: Rp ${nisab.toLocaleString("id-ID")}<br>
-                Karena penghasilan bersih ≥ nisab, Anda wajib menunaikan zakat 2.5% dari penghasilan bersih, 
-                yaitu Rp ${zakat.toLocaleString("id-ID")}.
-            `;
-
-            hukumText = `
-                Hukum logika pada zakat penghasilan ini:
-                - **Hukum Konjungsi (AND)**: Wajib zakat jika penghasilan bersih ≥ nisab dan periode valid.
-                - **Hukum Implikasi**: Jika penghasilan ≥ nisab, maka wajib zakat; jika < nisab, maka tidak wajib.
-                - **Hukum Negasi**: Jika penghasilan < nisab, hasil logika → Tidak Wajib Zakat.
+            hukumLogika = `
+Hukum logika pada zakat penghasilan ini:
+<ul>
+  <li><b>Hukum Konjungsi (AND)</b>: Zakat wajib jika penghasilan bersih ≥ nisab <b>dan</b> periode valid.</li>
+  <li><b>Hukum Implikasi</b>: Jika penghasilan ≥ nisab, maka wajib zakat; jika tidak, maka tidak wajib.</li>
+  <li><b>Hukum Negasi</b>: Jika penghasilan < nisab, hasil logika → Tidak Wajib Zakat.</li>
+</ul>
             `;
         } else {
-            hasilText = "Tidak Wajib Zakat";
+            rincian.push(`Periode: ${periode.charAt(0).toUpperCase() + periode.slice(1)}
+Penghasilan bersih: Rp ${penghasilanBersih.toLocaleString("id-ID")}
+Nisab: Rp ${nisab.toLocaleString("id-ID")}
+Karena penghasilan bersih < nisab, Anda belum berkewajiban menunaikan zakat.`);
 
-            argumenText = `
-                Periode: ${periode.charAt(0).toUpperCase() + periode.slice(1)}<br>
-                Penghasilan bersih: Rp ${penghasilanBersih.toLocaleString("id-ID")}<br>
-                Nisab: Rp ${nisab.toLocaleString("id-ID")}<br>
-                Karena penghasilan bersih < nisab, Anda belum berkewajiban menunaikan zakat.
-            `;
-
-            hukumText = `
-                Hukum logika:
-                <ul>
-                <li><b>>Hukum Negasi</b>: Jika penghasilan bersih < nisab, maka keputusan akhir → Tidak Wajib Zakat.</li>
-                <li><b>Hukum Konjungsi (AND)</b> memastikan zakat hanya wajib bila kedua proposisi benar (penghasilan ≥ nisab dan periode valid).</li>
-                <ul>
+            hukumLogika = `
+<ul>
+  <li><b>Hukum Negasi</b>: Jika penghasilan bersih < nisab, maka hasil logika → Tidak Wajib Zakat.</li>
+  <li><b>Hukum Konjungsi (AND)</b>: Wajib hanya bila penghasilan ≥ nisab dan periode valid.</li>
+</ul>
             `;
         }
     }
 
-    // Update ke HTML
-    document.getElementById('hasil').innerText = hasilText;
-    document.getElementById('nominalZakat').innerText = nominalText;
-    document.getElementById('argumenLogis').innerHTML = argumenText;
-    document.getElementById('hukumLogika').innerHTML = hukumText;
+    return {
+        totalZakatRp,
+        rincian,
+        hukumLogika
+    };
 }
