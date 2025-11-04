@@ -3,15 +3,29 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kalkulator Multiple Zakat</title>
+  <title>Kalkulator Multiple Zakat - Lengkap</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <h1>UTS Logika Matematika - Kalkulator Multiple Zakat</h1>
   <h2>Pilih Jenis Zakat</h2>
-  <label><input type="checkbox" id="cekEmas" /> Zakat Emas</label><br />
-  <label><input type="checkbox" id="cekPertanian" /> Zakat Pertanian</label><br />
-  <label><input type="checkbox" id="cekPenghasilan" /> Zakat Penghasilan</label><br /><br />
+  
+  <div style="text-align: left; display: inline-block; max-width: 600px;">
+    <h3>Zakat Harta (Maal)</h3>
+    <label><input type="checkbox" id="cekEmas" /> Zakat Emas</label><br />
+    <label><input type="checkbox" id="cekPerak" /> Zakat Perak</label><br />
+    <label><input type="checkbox" id="cekUang" /> Zakat Uang & Surat Berharga</label><br />
+    <label><input type="checkbox" id="cekPerniagaan" /> Zakat Perniagaan (Dagang)</label><br /><br />
+    
+    <h3>Zakat Hasil Usaha</h3>
+    <label><input type="checkbox" id="cekPertanian" /> Zakat Pertanian</label><br />
+    <label><input type="checkbox" id="cekPeternakan" /> Zakat Peternakan & Perikanan</label><br />
+    <label><input type="checkbox" id="cekPenghasilan" /> Zakat Penghasilan (Profesi)</label><br />
+    <label><input type="checkbox" id="cekPertambangan" /> Zakat Pertambangan</label><br /><br />
+    
+    <h3>Zakat Khusus</h3>
+    <label><input type="checkbox" id="cekRikaz" /> Zakat Rikaz (Harta Temuan)</label><br /><br />
+  </div>
 
   <div id="inputContainer"></div>
 
